@@ -1,3 +1,8 @@
+## 2.0.2 / 2016-12-21
+
+- Support custom props inside fallbacks.
+- Always generate `background-image` from `background: {image}`.
+
 ## 2.0.1 / 2016-12-09
 
 - update to jss 6.0
