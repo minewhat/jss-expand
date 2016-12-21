@@ -34,29 +34,21 @@ function arrayToString(value, prop, scheme, rule) {
  * @param {Object} object of values
  * @param {String} original property
  * @param {Object} original rule
+ * @param {Boolean} is fallback prop
  * @return {String} converted string
  */
-function objectToString(value, prop, rule) {
+function objectToString(value, prop, rule, isFallback) {
   if (!(propObj[prop] || customPropObj[prop])) return ''
 
   const result = []
 
   // Check if exists any non-standart property
   if (customPropObj[prop]) {
-    for (const baseProp in customPropObj[prop]) {
-      const propName = customPropObj[prop][baseProp]
-      // If current property doesn't exist alerady in rule - add new one
-      if (value[baseProp] && !rule.prop(propName)) {
-        rule.prop(propName, styleDetector({
-          [propName]: value[baseProp]
-        }, rule)[propName])
-      }
-      delete value[baseProp]
-    }
+    value = customPropsToStyle(value, rule, customPropObj[prop], isFallback)
   }
 
   // Pass throught all standart props
-  if (Object.keys(value).length !== 0) {
+  if (Object.keys(value).length) {
     for (const baseProp in propObj[prop]) {
       if (value[baseProp]) {
         if (value[baseProp].constructor === Array) {
@@ -77,23 +69,56 @@ function objectToString(value, prop, rule) {
 }
 
 /**
+ * Convert custom properties values to styles adding them to rule directly
+ *
+ * @param {Object} object of values
+ * @param {Object} original rule
+ * @param {String} property, that contain partial custom properties
+ * @param {Boolean} is fallback prop
+ * @return {Object} value without custom properties, that was already added to rule
+ */
+function customPropsToStyle(value, rule, customProps, isFallback) {
+  for (const prop in customProps) {
+    const propName = customProps[prop]
+
+    // If current property doesn't exist alerady in rule - add new one
+    if (value[prop] && (isFallback || !rule.prop(propName))) {
+      const appendedValue = styleDetector({
+        [propName]: value[prop]
+      }, rule)[propName]
+
+      // Add style directly in rule
+      if (isFallback) rule.style.fallbacks[propName] = appendedValue
+      else rule.style[propName] = appendedValue
+    }
+    // Delete converted property to avoid double converting
+    delete value[prop]
+  }
+
+  return value
+}
+
+/**
  * Detect if a style needs to be converted.
  *
  * @param {Object} style
  * @param {Object} rule
+ * @param {Boolean} is fallback prop
  * @return {Object} convertedStyle
  */
-function styleDetector(style, rule) {
+function styleDetector(style, rule, isFallback) {
   for (const prop in style) {
     const value = style[prop]
 
     if (value.constructor === Object) {
-      if (prop === 'fallbacks') style[prop] = styleDetector(style[prop])
-      else {
-        style[prop] = objectToString(value, prop, rule)
-        // Avoid creating properties with empty values
-        if (!style[prop]) delete style[prop]
+      if (prop === 'fallbacks') {
+        style[prop] = styleDetector(style[prop], rule, true)
+        continue
       }
+
+      style[prop] = objectToString(value, prop, rule, isFallback)
+      // Avoid creating properties with empty values
+      if (!style[prop]) delete style[prop]
       continue
     }
 
@@ -101,7 +126,7 @@ function styleDetector(style, rule) {
     if (value.constructor === Array && value[0].constructor !== Array) {
       if (prop === 'fallbacks') {
         for (let index = 0; index < style[prop].length; index ++) {
-          style[prop][index] = styleDetector(style[prop][index])
+          style[prop][index] = styleDetector(style[prop][index], rule, true)
         }
         continue
       }
