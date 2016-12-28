@@ -8,9 +8,10 @@ in general and [read full documentation](https://github.com/cssinjs/jss-expand/b
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/cssinjs/lobby)
 
-## Usage example
+## Example
+
 ```javascript
-const sheet = jss.createStyleSheet({
+const styles = {
   container: {
     padding: [20, 10],
     background: {
@@ -31,8 +32,10 @@ const sheet = jss.createStyleSheet({
       }
     ]
   }
-})
+}
 ```
+Compiles to:
+
 ```css
 .container-3kjh2 {
   padding: 20px 10px;
@@ -41,6 +44,7 @@ const sheet = jss.createStyleSheet({
   transition: opacity 200ms, width 300ms;
 }
 ```
+
 ## Features
 
 1. Expanded object notation for all properties.
@@ -82,28 +86,29 @@ const sheet = jss.createStyleSheet({
   ```css
   transition: opacity 200ms, width 300ms;
   ```
-  
+
 1. Default unit support.
 
-Now, using expanded arrays and objects syntax, you don't need to use quotes for the most numeric values! This is achieved in combination with [jss-default-unit](https://github.com/cssinjs/jss-default-unit) plugin.
+  Now, using expanded arrays and objects syntax, you don't need to use quotes for the most numeric values! This is achieved in combination with [jss-default-unit](https://github.com/cssinjs/jss-default-unit) plugin.
 
 ## Issues
 
 File a bug against [cssinjs/jss prefixed with \[jss-expand\]](https://github.com/cssinjs/jss/issues/new?title=[jss-expand]%20).
 
-
 ## Run tests
+
 ```bash
 npm i
 npm run test
 ```
 
-
 ## Run benchmark tests
+
 ```bash
 npm i
 npm run bench
 ```
 
 ## Licence
+
 MIT

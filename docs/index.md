@@ -2,115 +2,114 @@
 
 ### Expanded properties.
 
-  A much more readable syntax and less repeatitions compared to CSS.
+A much more readable syntax and less repeatitions compared to CSS.
 
-  ```js
-  border: {
-    color: 'black',
-    width: 1,
-    style: 'solid'
-  }
-  ```
-  will output:
+```js
+border: {
+  color: 'black',
+  width: 1,
+  style: 'solid'
+}
+```
+will output:
 
-  ```css
-  border: 1px solid black;
-  ```
+```css
+border: 1px solid black;
+```
 
-  See [properties section](#supported-properties) for more details.
+See [properties section](#supported-properties) for more details.
 
 
 ### Using arrays for space separated properties.
 
+```js
+padding: [5, 10, 5],
+margin: [10, 5]
+```
 
-  ```js
-  padding: [5, 10, 5],
-  margin: [10, 5]
-  ```
+will output
 
-  will output
-
-  ```css
-  padding: 5px 10px 5px;
-  margin: 10px 5px
-  ```
-  Supported properties:
-  - `backgroundSize`
-  - `backgroundPosition`
-  - `border`
-  - `borderBottom`
-  - `borderLeft`
-  - `borderTop`
-  - `borderRight`
-  - `boxShadow`
-  - `flex`
-  - `margin`
-  - `padding`
-  - `outline`
-  - `transformOrigin`
-  - `transform`
-  - `transition`
+```css
+padding: 5px 10px 5px;
+margin: 10px 5px
+```
+Supported properties:
+- `backgroundSize`
+- `backgroundPosition`
+- `border`
+- `borderBottom`
+- `borderLeft`
+- `borderTop`
+- `borderRight`
+- `boxShadow`
+- `flex`
+- `margin`
+- `padding`
+- `outline`
+- `transformOrigin`
+- `transform`
+- `transition`
 
 ### Using arrays for multi value properties.
 
-  ```js
-  transition: [
-    ['opacity', '200ms'],
-    ['width', '300ms']
-  ]
-  ```
+```js
+transition: [
+  ['opacity', '200ms'],
+  ['width', '300ms']
+]
+```
 
-  will output
+will output
 
-  ```css
-  transition: opacity 200ms, width 300ms;
-  ```
+```css
+transition: opacity 200ms, width 300ms;
+```
 
 ### Use objects inside of arrays.
 
-  ```js
-  transition: [{
-      property: 'opacity',
-      duration: '200ms'
-    }, {
-      property: 'width',
-      duration: '300ms'
-  }]
+```js
+transition: [{
+    property: 'opacity',
+    duration: '200ms'
+  }, {
+    property: 'width',
+    duration: '300ms'
+}]
 
-  ```
-  will output:
+```
+will output:
 
-  ```css
-  transition: opacity 200ms, width 300ms;
-  ```
+```css
+transition: opacity 200ms, width 300ms;
+```
 
 ### Fallbacks are supported.
 
-  JSS has a [fallbacks api](https://github.com/cssinjs/jss/blob/master/docs/json-api.md#fallbacks) which is also supported.
+JSS has a [fallbacks api](https://github.com/cssinjs/jss/blob/master/docs/json-api.md#fallbacks) which is also supported.
 
-  ```js
-  button: {
+```js
+button: {
+  background: {
+    image: 'linear-gradient(red, green)'
+  },
+  fallbacks: {
     background: {
-      image: 'linear-gradient(red, green)'
-    },
-    fallbacks: {
-      background: {
-        color: 'red',
-        repeat: 'no-repeat',
-        position: [0 , 0]
-      }
+      color: 'red',
+      repeat: 'no-repeat',
+      position: [0 , 0]
     }
   }
-  ```
+}
+```
 
-  will output:
+will output:
 
-  ```css
-  foo {
-    background: red no-repeat 0 0;
-    background: linear-gradient(red, green);
-  }
-  ```
+```css
+foo {
+  background: red no-repeat 0 0;
+  background: linear-gradient(red, green);
+}
+```
 
 ## Supported properties.
 
