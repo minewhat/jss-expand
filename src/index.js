@@ -22,6 +22,7 @@ function mapValuesByProp(value, prop, rule) {
  * @return {String} converted string
  */
 function arrayToString(value, prop, scheme, rule) {
+  if (value.length === 0) return undefined
   if (value[0].constructor === Object) return mapValuesByProp(value, prop, rule)
   if (scheme[prop] == null) return value.join(',')
   if (value[0].constructor === Array) return arrayToString(value[0], prop, scheme)
@@ -110,7 +111,10 @@ function styleDetector(style, rule, isFallback) {
   for (const prop in style) {
     const value = style[prop]
 
-    if (value.constructor === Object) {
+    // Eliminate properties with empty values
+    if (!style[prop]) delete style[prop]
+
+    else if (value.constructor === Object) {
       if (prop === 'fallbacks') {
         style[prop] = styleDetector(style[prop], rule, true)
         continue
@@ -123,7 +127,7 @@ function styleDetector(style, rule, isFallback) {
     }
 
     // Check double arrays to avoid recursion.
-    if (value.constructor === Array && value[0].constructor !== Array) {
+    else if (Array.isArray(value) && !Array.isArray(value[0])) {
       if (prop === 'fallbacks') {
         for (let index = 0; index < style[prop].length; index ++) {
           style[prop][index] = styleDetector(style[prop][index], rule, true)
