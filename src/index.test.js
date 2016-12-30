@@ -329,7 +329,8 @@ describe('jss-expand', () => {
       sheet = jss.createStyleSheet({
         a: {
           padding: [], // Empty: incorrect, to ignore
-          margin: '',
+          color: '',
+          margin: 0,
           'border-radius': '10px' // Still one correct value
         },
         p: {
@@ -345,6 +346,7 @@ describe('jss-expand', () => {
     it('should generate correct CSS', () => {
       expect(sheet.toString()).to.be(
         '.a-id {\n' +
+        '  margin: 0;\n' +
         '  border-radius: 10px;\n' +
         '}'
       )
