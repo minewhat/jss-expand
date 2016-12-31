@@ -321,4 +321,35 @@ describe('jss-expand', () => {
       )
     })
   })
+
+  describe('gracefully handle invalid values', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        a: {
+          padding: [], // Empty: incorrect, to ignore
+          color: '',
+          margin: 0,
+          'border-radius': '10px' // Still one correct value
+        },
+        p: {
+          margin: [] // Will lead to empty rule, eliminated
+        }
+      })
+    })
+
+    it('should add rules', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
+    })
+
+    it('should generate correct CSS', () => {
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  margin: 0;\n' +
+        '  border-radius: 10px;\n' +
+        '}'
+      )
+    })
+  })
 })
