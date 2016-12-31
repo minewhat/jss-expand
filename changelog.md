@@ -1,3 +1,7 @@
+## 2.0.3 / 2016-12-31
+
+- Support empty arrays cssinjs/jss#398
+
 ## 2.0.2 / 2016-12-21
 
 - Support custom props inside fallbacks.
