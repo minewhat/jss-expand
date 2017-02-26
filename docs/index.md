@@ -267,8 +267,20 @@ textShadow: {
 
 ```js
 flex: {
+  basis: null,
+  direction: null,
+  flow: null,
   grow: null,
   shrink: null,
-  basis: null
+  wrap: null
+}
+```
+
+### align
+```js
+align: {
+  self: null,
+  items: null,
+  content: null
 }
 ```

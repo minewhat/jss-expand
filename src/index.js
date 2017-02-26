@@ -83,7 +83,7 @@ function customPropsToStyle(value, rule, customProps, isFallback) {
     const propName = customProps[prop]
 
     // If current property doesn't exist already in rule - add new one
-    if (value[prop] && (isFallback || !rule.prop(propName))) {
+    if (typeof value[prop] !== 'undefined' && (isFallback || !rule.prop(propName))) {
       const appendedValue = styleDetector({
         [propName]: value[prop]
       }, rule)[propName]
