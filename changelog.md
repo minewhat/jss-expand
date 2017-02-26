@@ -1,6 +1,6 @@
 ## 2.0.4 / 2017-02-26
 
-- Added support of all flexbox related properties.
+- Added support of all flexbox and align related properties.
 
 ## 2.0.3 / 2016-12-31
 

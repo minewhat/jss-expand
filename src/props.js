@@ -153,15 +153,11 @@ export const customPropObj = {
     direction: 'flex-direction',
     wrap: 'flex-wrap',
     flow: 'flex-flow',
-    shrink: 'flex-shrink',
-    justifyContent: 'justify-content',
-    'justify-content': 'justify-content', // Needed to avoid compilation issues with jss-camel-case
-    alignSelf: 'align-self',
-    'align-self': 'align-self', // Needed to avoid compilation issues with jss-camel-case
-    alignItems: 'align-items',
-    'align-items': 'align-items', // Needed to avoid compilation issues with jss-camel-case
-    alignContent: 'align-content',
-    'align-content': 'align-content', // Needed to avoid compilation issues with jss-camel-case
-    order: 'order'
+    shrink: 'flex-shrink'
+  },
+  align: {
+    self: 'align-self',
+    items: 'align-items',
+    content: 'align-content'
   }
 }
