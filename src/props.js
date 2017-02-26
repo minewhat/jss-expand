@@ -122,11 +122,6 @@ export const propObj = {
     y: 0,
     blur: null,
     color: null
-  },
-  flex: {
-    grow: null,
-    shrink: null,
-    basis: null
   }
 }
 
@@ -151,5 +146,22 @@ export const customPropObj = {
     family: 'font-family',
     lineHeight: 'line-height', // Needed to avoid compilation issues with jss-camel-case
     'line-height': 'line-height'
+  },
+  flex: {
+    grow: 'flex-grow',
+    basis: 'flex-basis',
+    direction: 'flex-direction',
+    wrap: 'flex-wrap',
+    flow: 'flex-flow',
+    shrink: 'flex-shrink',
+    justifyContent: 'justify-content',
+    'justify-content': 'justify-content', // Needed to avoid compilation issues with jss-camel-case
+    alignSelf: 'align-self',
+    'align-self': 'align-self', // Needed to avoid compilation issues with jss-camel-case
+    alignItems: 'align-items',
+    'align-items': 'align-items', // Needed to avoid compilation issues with jss-camel-case
+    alignContent: 'align-content',
+    'align-content': 'align-content', // Needed to avoid compilation issues with jss-camel-case
+    order: 'order'
   }
 }

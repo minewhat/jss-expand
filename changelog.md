@@ -1,3 +1,7 @@
+## 2.0.4 / 2017-02-26
+
+- Added support of all flexbox related properties.
+
 ## 2.0.3 / 2016-12-31
 
 - Support empty arrays cssinjs/jss#398
