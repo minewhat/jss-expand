@@ -136,8 +136,8 @@ function styleDetector(style, rule, isFallback) {
       if (!style[prop]) delete style[prop]
     }
 
-	// Maybe a computed value resulting in an empty string
-	else if (style[prop] === '') delete style[prop]
+    // Maybe a computed value resulting in an empty string
+    else if (style[prop] === '') delete style[prop]
   }
   return style
 }
