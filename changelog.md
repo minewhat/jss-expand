@@ -1,3 +1,7 @@
+## 3.0.0 / 2017-04-10
+
+- Support jss 7.0
+
 ## 2.1.0 / 2017-02-26
 
 - Added support of all flexbox and align related properties.
