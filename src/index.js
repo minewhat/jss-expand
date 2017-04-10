@@ -22,10 +22,10 @@ function mapValuesByProp(value, prop, rule) {
  * @return {String} converted string
  */
 function arrayToString(value, prop, scheme, rule) {
-  if (value.length === 0) return ''
-  if (value[0].constructor === Object) return mapValuesByProp(value, prop, rule)
   if (scheme[prop] == null) return value.join(',')
+  if (value.length === 0) return ''
   if (Array.isArray(value[0])) return arrayToString(value[0], prop, scheme)
+  if (typeof value[0] === 'object') return mapValuesByProp(value, prop, rule)
   return value.join(' ')
 }
 
@@ -111,9 +111,24 @@ function styleDetector(style, rule, isFallback) {
   for (const prop in style) {
     const value = style[prop]
 
-    if (value.constructor === Object) {
+    if (Array.isArray(value)) {
+      // Check double arrays to avoid recursion.
+      if (!Array.isArray(value[0])) {
+        if (prop === 'fallbacks') {
+          for (let index = 0; index < style.fallbacks.length; index ++) {
+            style.fallbacks[index] = styleDetector(style.fallbacks[index], rule, true)
+          }
+          continue
+        }
+
+        style[prop] = arrayToString(value, prop, propArray)
+        // Avoid creating properties with empty values
+        if (!style[prop]) delete style[prop]
+      }
+    }
+    else if (typeof value === 'object') {
       if (prop === 'fallbacks') {
-        style[prop] = styleDetector(style[prop], rule, true)
+        style.fallbacks = styleDetector(style.fallbacks, rule, true)
         continue
       }
 
@@ -122,23 +137,10 @@ function styleDetector(style, rule, isFallback) {
       if (!style[prop]) delete style[prop]
     }
 
-    // Check double arrays to avoid recursion.
-    else if (Array.isArray(value) && !Array.isArray(value[0])) {
-      if (prop === 'fallbacks') {
-        for (let index = 0; index < style[prop].length; index ++) {
-          style[prop][index] = styleDetector(style[prop][index], rule, true)
-        }
-        continue
-      }
-
-      style[prop] = arrayToString(value, prop, propArray)
-      // Avoid creating properties with empty values
-      if (!style[prop]) delete style[prop]
-    }
-
     // Maybe a computed value resulting in an empty string
     else if (style[prop] === '') delete style[prop]
   }
+
   return style
 }
 
@@ -149,18 +151,19 @@ function styleDetector(style, rule, isFallback) {
  * @api public
  */
 export default function jssExpand() {
-  return (rule) => {
-    const {style, type} = rule
-    if (!style || type !== 'regular') return
+  function onProcessStyle(style, rule) {
+    if (!style || rule.type !== 'regular') return style
 
     if (Array.isArray(style)) {
       // Pass rules one by one and reformat them
       for (let index = 0; index < style.length; index++) {
         style[index] = styleDetector(style[index], rule)
       }
-      return
+      return style
     }
 
-    rule.style = styleDetector(style, rule)
+    return styleDetector(style, rule)
   }
+
+  return {onProcessStyle}
 }
