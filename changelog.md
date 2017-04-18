@@ -1,3 +1,7 @@
+## 3.0.1 / 2017-04-18
+
+- Add webpack to the devDeps
+
 ## 3.0.0 / 2017-04-10
 
 - Support jss 7.0
