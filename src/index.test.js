@@ -3,7 +3,7 @@ import expand from './index'
 import {create} from 'jss'
 
 const settings = {
-  generateClassName: (rule) => `${rule.name}-id`
+  createGenerateClassName: () => (rule) => `${rule.key}-id`
 }
 
 describe('jss-expand', () => {

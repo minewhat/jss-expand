@@ -34,7 +34,7 @@
     "bench": "cross-env NODE_ENV=test BENCHMARK=true karma start --single-run ",
     "test": "cross-env NODE_ENV=test karma start --single-run ",
     "test:watch": "cross-env NODE_ENV=test karma start",
-    "prepublish": "npm run all"
+    "prepublishOnly": "npm run all"
   },
   "license": "MIT",
   "main": "./lib/index.js",
@@ -54,7 +54,7 @@
     "eslint-plugin-react": "^5.2.2",
     "expect.js": "^0.3.1",
     "json-loader": "^0.5.4",
-    "jss": "^7.0.0",
+    "jss": "^8.0.0",
     "karma": "^1.2.0",
     "karma-benchmark": "^0.6.0",
     "karma-benchmark-reporter": "^0.1.1",
@@ -74,7 +74,7 @@
     "webpack": "^1.12.2"
   },
   "peerDependencies": {
-    "jss": "^7.0.0"
+    "jss": "^8.0.0"
   },
   "lint-staged": {
     "./src/*.js": [

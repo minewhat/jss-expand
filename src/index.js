@@ -152,7 +152,7 @@ function styleDetector(style, rule, isFallback) {
  */
 export default function jssExpand() {
   function onProcessStyle(style, rule) {
-    if (!style || rule.type !== 'regular') return style
+    if (!style || rule.type !== 'style') return style
 
     if (Array.isArray(style)) {
       // Pass rules one by one and reformat them
