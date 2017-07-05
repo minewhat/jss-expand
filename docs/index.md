@@ -173,9 +173,9 @@ background: {
   attachment: null,
   color: null,
   image: null,
-  position: null, // Can be written using array e.g. `[0, 0]`
+  position: null, // Accepts array notation (e.g., `[0, 0]`, `['center', 'top']`)
   repeat: null,
-  size: null, // Can be written using array e.g. `['center', 'center']`
+  size: null, // Accepts array notation (e.g., `['100%', '50%']`) and keywords (`contain`, `cover`)
 }
 ```
 
