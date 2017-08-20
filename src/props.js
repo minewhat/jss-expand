@@ -112,8 +112,8 @@ export const propObj = {
   'box-shadow': {
     x: 0,
     y: 0,
-    blur: null,
-    spread: null,
+    blur: 0,
+    spread: 0,
     color: null,
     inset: null
   },

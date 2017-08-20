@@ -1,3 +1,7 @@
+## 4.0.1 / 2017-08-17
+
+- Support box-shadow spread property without blur one cssinjs/jss#563
+
 ## 4.0.0 / 2017-06-20
 
 - Support jss 8
