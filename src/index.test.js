@@ -1,4 +1,5 @@
 import expect from 'expect.js'
+import Observable from 'zen-observable'
 import expand from './index'
 import {create} from 'jss'
 
@@ -348,6 +349,28 @@ describe('jss-expand', () => {
         '.a-id {\n' +
         '  margin: 0;\n' +
         '  border-radius: 10px;\n' +
+        '}'
+      )
+    })
+  })
+
+  describe('support observable value', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        a: {
+          width: new Observable((observer) => {
+            observer.next(1)
+          })
+        }
+      })
+    })
+
+    it('should generate correct CSS', () => {
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  width: 1;\n' +
         '}'
       )
     })

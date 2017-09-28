@@ -1,3 +1,4 @@
+import isObservable from 'is-observable'
 import {propArray, propArrayInObj, propObj, customPropObj} from './props'
 
 /**
@@ -25,7 +26,7 @@ function arrayToString(value, prop, scheme, rule) {
   if (scheme[prop] == null) return value.join(',')
   if (value.length === 0) return ''
   if (Array.isArray(value[0])) return arrayToString(value[0], prop, scheme)
-  if (typeof value[0] === 'object') return mapValuesByProp(value, prop, rule)
+  if (typeof value[0] === 'object' && !isObservable(value[0])) return mapValuesByProp(value, prop, rule)
   return value.join(' ')
 }
 
@@ -126,7 +127,7 @@ function styleDetector(style, rule, isFallback) {
         if (!style[prop]) delete style[prop]
       }
     }
-    else if (typeof value === 'object') {
+    else if (typeof value === 'object' && !isObservable(value)) {
       if (prop === 'fallbacks') {
         style.fallbacks = styleDetector(style.fallbacks, rule, true)
         continue
