@@ -10,7 +10,7 @@ import {propArray, propArrayInObj, propObj, customPropObj} from './props'
  * @return {String} mapped values
  */
 function mapValuesByProp(value, prop, rule) {
-  return value.map((item) => objectToArray(item, prop, rule))
+  return value.map((item) => objectToArray(item, prop, rule, false, true))
 }
 
 /**
@@ -29,6 +29,7 @@ function processArray(value, prop, scheme, rule) {
   if (typeof value[0] === 'object' && !isObservable(value[0])) {
     return mapValuesByProp(value, prop, rule)
   }
+
   return [value]
 }
 
@@ -39,9 +40,10 @@ function processArray(value, prop, scheme, rule) {
  * @param {String} original property
  * @param {Object} original rule
  * @param {Boolean} is fallback prop
+ * @param {Boolean} object is inside array
  * @return {String} converted string
  */
-function objectToArray(value, prop, rule, isFallback) {
+function objectToArray(value, prop, rule, isFallback, isInArray) {
   if (!(propObj[prop] || customPropObj[prop])) return []
 
   const result = []
@@ -71,7 +73,7 @@ function objectToArray(value, prop, rule, isFallback) {
     }
   }
 
-  if (!result.length) return result
+  if (!result.length || isInArray) return result
   return [result]
 }
 
