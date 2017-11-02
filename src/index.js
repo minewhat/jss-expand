@@ -10,11 +10,11 @@ import {propArray, propArrayInObj, propObj, customPropObj} from './props'
  * @return {String} mapped values
  */
 function mapValuesByProp(value, prop, rule) {
-  return value.map((item) => objectToString(item, prop, rule))
+  return value.map((item) => objectToArray(item, prop, rule))
 }
 
 /**
- * Convert array to string.
+ * Convert array to nested array, if needed
  *
  * @param {Array} array of values
  * @param {String} original property
@@ -22,18 +22,18 @@ function mapValuesByProp(value, prop, rule) {
  * @param {Object} original rule
  * @return {String} converted string
  */
-function arrayToString(value, prop, scheme, rule) {
-  if (scheme[prop] == null) return value.join(',')
-  if (value.length === 0) return ''
-  if (Array.isArray(value[0])) return arrayToString(value[0], prop, scheme)
+function processArray(value, prop, scheme, rule) {
+  if (scheme[prop] == null) return value
+  if (value.length === 0) return []
+  if (Array.isArray(value[0])) return processArray(value[0], prop, scheme)
   if (typeof value[0] === 'object' && !isObservable(value[0])) {
     return mapValuesByProp(value, prop, rule)
   }
-  return value.join(' ')
+  return [value]
 }
 
 /**
- * Convert object to string.
+ * Convert object to array.
  *
  * @param {Object} object of values
  * @param {String} original property
@@ -41,8 +41,8 @@ function arrayToString(value, prop, scheme, rule) {
  * @param {Boolean} is fallback prop
  * @return {String} converted string
  */
-function objectToString(value, prop, rule, isFallback) {
-  if (!(propObj[prop] || customPropObj[prop])) return ''
+function objectToArray(value, prop, rule, isFallback) {
+  if (!(propObj[prop] || customPropObj[prop])) return []
 
   const result = []
 
@@ -56,7 +56,9 @@ function objectToString(value, prop, rule, isFallback) {
     for (const baseProp in propObj[prop]) {
       if (value[baseProp]) {
         if (Array.isArray(value[baseProp])) {
-          result.push(arrayToString(value[baseProp], baseProp, propArrayInObj))
+          result.push(propArrayInObj[baseProp] === null ?
+            value[baseProp] :
+            value[baseProp].join(' '))
         }
         else result.push(value[baseProp])
         continue
@@ -69,7 +71,8 @@ function objectToString(value, prop, rule, isFallback) {
     }
   }
 
-  return result.join(' ')
+  if (!result.length) return result
+  return [result]
 }
 
 /**
@@ -124,9 +127,9 @@ function styleDetector(style, rule, isFallback) {
           continue
         }
 
-        style[prop] = arrayToString(value, prop, propArray)
+        style[prop] = processArray(value, prop, propArray)
         // Avoid creating properties with empty values
-        if (!style[prop]) delete style[prop]
+        if (!style[prop].length) delete style[prop]
       }
     }
     else if (typeof value === 'object' && !isObservable(value)) {
@@ -135,9 +138,9 @@ function styleDetector(style, rule, isFallback) {
         continue
       }
 
-      style[prop] = objectToString(value, prop, rule, isFallback)
+      style[prop] = objectToArray(value, prop, rule, isFallback)
       // Avoid creating properties with empty values
-      if (!style[prop]) delete style[prop]
+      if (!style[prop].length) delete style[prop]
     }
 
     // Maybe a computed value resulting in an empty string
