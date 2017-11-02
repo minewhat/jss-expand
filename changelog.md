@@ -1,3 +1,7 @@
+## 5.0.1 / 2017-11-02
+
+- Produce array based syntax cssinjs/jss#606
+
 ## 5.0.0 / 2017-09-30
 
 - Support JSS 9
