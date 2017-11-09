@@ -131,7 +131,8 @@ export const propObj = {
  */
 export const customPropObj = {
   border: {
-    radius: 'border-radius'
+    radius: 'border-radius',
+    image: 'border-image'
   },
   background: {
     size: 'background-size',
