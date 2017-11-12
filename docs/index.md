@@ -2,7 +2,7 @@
 
 ### Expanded properties.
 
-A much more readable syntax and less repeatitions compared to CSS.
+A much more readable syntax and less repetitions compared to CSS.
 
 ```js
 border: {
