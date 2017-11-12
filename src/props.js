@@ -11,6 +11,7 @@ export const propArray = {
   'border-top': true,
   'border-right': true,
   'border-radius': true,
+  'border-image': true,
   'box-shadow': true,
   flex: true,
   margin: true,
@@ -131,7 +132,8 @@ export const propObj = {
  */
 export const customPropObj = {
   border: {
-    radius: 'border-radius'
+    radius: 'border-radius',
+    image: 'border-image'
   },
   background: {
     size: 'background-size',
