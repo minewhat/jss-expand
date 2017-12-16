@@ -1,3 +1,7 @@
+## 5.1.0 / 2017-12-16
+
+- Remove isObservable checks, no need any more.
+
 ## 5.0.1 / 2017-11-02
 
 - Support border-image cssinjs/jss#621
