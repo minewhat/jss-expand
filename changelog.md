@@ -1,3 +1,7 @@
+## 5.1.0 / 2017-12-16
+
+- Remove isObservable checks, no need any more.
+
 ## 5.0.0 / 2017-09-30
 
 - Support JSS 9
