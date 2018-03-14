@@ -284,3 +284,25 @@ align: {
   content: null
 }
 ```
+
+### grid
+```js
+grid: {
+  templateColumns: null,
+  templateRows: null,
+  templateAreas: null,
+  template: null,
+  autoColumns: null,
+  autoRows: null,
+  autoFlow: null,
+  column: null,
+  rowStart: null,
+  rowEnd: null,
+  columnStart: null,
+  columnEnd: null,
+  area: null,
+  gap: null,
+  rowGap: null,
+  columnGap: null,
+},
+```
