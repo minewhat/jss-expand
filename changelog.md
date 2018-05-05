@@ -1,3 +1,7 @@
+## 5.2.0 / 2018-05-05
+
+- Support array syntax for border width, style and color
+
 ## 5.1.0 / 2017-12-16
 
 - Remove isObservable checks, no need any more.
