@@ -1,6 +1,7 @@
 ## 5.3.0 / 2018-05-05
 
 - Produce array based syntax cssinjs/jss#606
+- Added CSS Grid support
 
 ## 5.2.0 / 2018-05-05
 
