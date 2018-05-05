@@ -1,6 +1,18 @@
-## 5.0.1 / 2017-11-02
+## 5.3.0 / 2018-05-05
 
 - Produce array based syntax cssinjs/jss#606
+
+## 5.2.0 / 2018-05-05
+
+- Support array syntax for border width, style and color
+
+## 5.1.0 / 2017-12-16
+
+- Remove isObservable checks, no need any more.
+
+## 5.0.1 / 2017-11-02
+
+- Support border-image cssinjs/jss#621
 
 ## 5.0.0 / 2017-09-30
 

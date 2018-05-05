@@ -2,7 +2,7 @@
 
 ### Expanded properties.
 
-A much more readable syntax and less repeatitions compared to CSS.
+A much more readable syntax and less repetitions compared to CSS.
 
 ```js
 border: {
@@ -41,6 +41,11 @@ Supported properties:
 - `borderLeft`
 - `borderTop`
 - `borderRight`
+- `borderRadius`
+- `borderImage`
+- `borderWidth`
+- `borderStyle`
+- `borderColor`
 - `boxShadow`
 - `flex`
 - `margin`
@@ -173,9 +178,9 @@ background: {
   attachment: null,
   color: null,
   image: null,
-  position: null, // Can be written using array e.g. `[0, 0]`
+  position: null, // Accepts array notation (e.g., `[0, 0]`, `['center', 'top']`)
   repeat: null,
-  size: null, // Can be written using array e.g. `['center', 'center']`
+  size: null, // Accepts array notation (e.g., `['100%', '50%']`) and keywords (`contain`, `cover`)
 }
 ```
 
@@ -283,4 +288,26 @@ align: {
   items: null,
   content: null
 }
+```
+
+### grid
+```js
+grid: {
+  templateColumns: null,
+  templateRows: null,
+  templateAreas: null,
+  template: null,
+  autoColumns: null,
+  autoRows: null,
+  autoFlow: null,
+  column: null,
+  rowStart: null,
+  rowEnd: null,
+  columnStart: null,
+  columnEnd: null,
+  area: null,
+  gap: null,
+  rowGap: null,
+  columnGap: null,
+},
 ```

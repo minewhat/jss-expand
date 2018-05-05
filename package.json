@@ -1,7 +1,7 @@
 {
   "name": "jss-expand",
   "description": "JSS plugin that gives you a better syntax than CSS.",
-  "version": "5.0.1",
+  "version": "5.2.0",
   "author": {
     "name": "Pavel Davydov",
     "email": "typical000@gmail.com"
@@ -54,7 +54,7 @@
     "eslint-plugin-react": "^5.2.2",
     "expect.js": "^0.3.1",
     "json-loader": "^0.5.4",
-    "jss": "^9.0.0",
+    "jss": "^9.4.0",
     "karma": "^1.2.0",
     "karma-benchmark": "^0.6.0",
     "karma-benchmark-reporter": "^0.1.1",
@@ -75,7 +75,7 @@
     "zen-observable": "^0.6.0"
   },
   "peerDependencies": {
-    "jss": "^9.0.0"
+    "jss": "^9.4.0"
   },
   "lint-staged": {
     "./src/*.js": [
@@ -84,7 +84,5 @@
     ]
   },
   "pre-commit": "lint:staged",
-  "dependencies": {
-    "is-observable": "^0.2.0"
-  }
+  "dependencies": {}
 }
