@@ -99,6 +99,38 @@ describe('jss-expand', () => {
     })
   })
 
+  describe('expanded rules multiple objects as entry', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        a: {
+          transition: [{
+            property: 'all',
+            delay: 2,
+            duration: 5,
+            timingFunction: 'linear'
+          }, {
+            property: 'opacity',
+            duration: 1
+          }]
+        }
+      })
+    })
+
+    it('should add rules', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
+    })
+
+    it('should generate correct CSS', () => {
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  transition: all 5 linear 2, opacity 1;\n' +
+        '}'
+      )
+    })
+  })
+
   describe('expanded rules as an object (without some styles)', () => {
     let sheet
 
