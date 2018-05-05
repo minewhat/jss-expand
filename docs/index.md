@@ -41,6 +41,11 @@ Supported properties:
 - `borderLeft`
 - `borderTop`
 - `borderRight`
+- `borderRadius`
+- `borderImage`
+- `borderWidth`
+- `borderStyle`
+- `borderColor`
 - `boxShadow`
 - `flex`
 - `margin`

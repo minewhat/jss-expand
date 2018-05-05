@@ -91,7 +91,9 @@ describe('jss-expand', () => {
     it('should generate correct CSS', () => {
       expect(sheet.toString()).to.be(
         '.a-id {\n' +
-        '  border: 1 solid #f00;\n' +
+        '  border-width: 1;\n' +
+        '  border-style: solid;\n' +
+        '  border-color: #f00;\n' +
         '}'
       )
     })
@@ -273,7 +275,7 @@ describe('jss-expand', () => {
       sheet = jss.createStyleSheet({
         a: {
           border: {
-            width: '2px',
+            width: ['2px', '3px'],
             style: 'solid',
             color: 'black',
             radius: ['5px', '10px']
@@ -289,8 +291,10 @@ describe('jss-expand', () => {
     it('should generate correct CSS', () => {
       expect(sheet.toString()).to.be(
         '.a-id {\n' +
-        '  border: 2px solid black;\n' +
         '  border-radius: 5px 10px;\n' +
+        '  border-width: 2px 3px;\n' +
+        '  border-style: solid;\n' +
+        '  border-color: black;\n' +
         '}'
       )
     })
