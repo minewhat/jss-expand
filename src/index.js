@@ -158,7 +158,7 @@ function styleDetector(style, rule, isFallback) {
  * @api public
  */
 export default function jssExpand() {
-  function onChange(newValue,prop,rule){
+  function onChangeValue(newValue,prop,rule){
     if(typeof newValue === 'object') {
       return objectToArray(newValue, prop, rule)
     }
