@@ -178,5 +178,5 @@ export default function jssExpand() {
     return styleDetector(style, rule)
   }
 
-  return {onProcessStyle,onChange}
+  return {onProcessStyle,onChangeValue}
 }
