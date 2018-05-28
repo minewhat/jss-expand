@@ -161,6 +161,10 @@ export default function jssExpand() {
   function onChangeValue(newValue,prop,rule){
     if(!Array.isArray(newValue) && typeof newValue === 'object') {
       return objectToArray(newValue, prop, rule)
+    }else if(Array.isArray(newValue)){
+        if(!newValue.length){
+          return '';
+        }
     }
     return newValue;
   }
