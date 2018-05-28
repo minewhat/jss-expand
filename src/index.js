@@ -162,7 +162,7 @@ export default function jssExpand() {
     if(!Array.isArray(newValue) && typeof newValue === 'object') {
       return objectToArray(newValue, prop, rule)
     }
-    return newValue;
+    return [newValue];
   }
   function onProcessStyle(style, rule) {
     if (!style || rule.type !== 'style') return style
