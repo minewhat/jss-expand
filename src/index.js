@@ -163,7 +163,7 @@ export default function jssExpand() {
       return objectToArray(newValue, prop, rule)
     }else if(Array.isArray(newValue)){
         if(!newValue.length){
-          return null;
+          return [];
         }
     }
     return newValue;
