@@ -1,4 +1,9 @@
-import {propArray, propArrayInObj, propObj, customPropObj} from './props'
+import {
+  propArray,
+  propArrayInObj,
+  propObj,
+  customPropObj
+} from './props'
 
 /**
  * Map values by given prop.
@@ -60,8 +65,7 @@ function objectToArray(value, prop, rule, isFallback, isInArray) {
           result.push(propArrayInObj[baseProp] === null ?
             value[baseProp] :
             value[baseProp].join(' '))
-        }
-        else result.push(value[baseProp])
+        } else result.push(value[baseProp])
         continue
       }
 
@@ -90,7 +94,7 @@ function customPropsToStyle(value, rule, customProps, isFallback) {
     const propName = customProps[prop]
 
     // If current property doesn't exist already in rule - add new one
-    if (typeof value[prop] !== 'undefined' && (isFallback || !rule.prop(propName))) {
+    if (value && typeof value[prop] !== 'undefined' && (isFallback || !rule.prop(propName))) {
       const appendedValue = styleDetector({
         [propName]: value[prop]
       }, rule)[propName]
@@ -118,11 +122,11 @@ function styleDetector(style, rule, isFallback) {
   for (const prop in style) {
     const value = style[prop]
 
-    if (Array.isArray(value)) {
+    if (value && Array.isArray(value)) {
       // Check double arrays to avoid recursion.
       if (!Array.isArray(value[0])) {
         if (prop === 'fallbacks') {
-          for (let index = 0; index < style.fallbacks.length; index ++) {
+          for (let index = 0; index < style.fallbacks.length; index++) {
             style.fallbacks[index] = styleDetector(style.fallbacks[index], rule, true)
           }
           continue
@@ -132,8 +136,7 @@ function styleDetector(style, rule, isFallback) {
         // Avoid creating properties with empty values
         if (!style[prop].length) delete style[prop]
       }
-    }
-    else if (typeof value === 'object') {
+    } else if (typeof value === 'object') {
       if (prop === 'fallbacks') {
         style.fallbacks = styleDetector(style.fallbacks, rule, true)
         continue
@@ -158,16 +161,17 @@ function styleDetector(style, rule, isFallback) {
  * @api public
  */
 export default function jssExpand() {
-  function onChangeValue(newValue,prop,rule){
-    if(!Array.isArray(newValue) && typeof newValue === 'object') {
+  function onChangeValue(newValue, prop, rule) {
+    if (!Array.isArray(newValue) && typeof newValue === 'object') {
       return objectToArray(newValue, prop, rule)
-    }else if(Array.isArray(newValue)){
-        if(!newValue.length){
-          return [];
-        }
+    } else if (Array.isArray(newValue)) {
+      if (!newValue.length) {
+        return [];
+      }
     }
     return newValue;
   }
+
   function onProcessStyle(style, rule) {
     if (!style || rule.type !== 'style') return style
 
@@ -182,5 +186,8 @@ export default function jssExpand() {
     return styleDetector(style, rule)
   }
 
-  return {onProcessStyle,onChangeValue}
+  return {
+    onProcessStyle,
+    onChangeValue
+  }
 }
