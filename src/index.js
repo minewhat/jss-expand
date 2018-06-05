@@ -38,6 +38,33 @@ function processArray(value, prop, scheme, rule) {
 }
 
 /**
+ * Check for separate properties.
+ *
+ */
+function checkForSeperateProp(value, prop) {
+  let seperateProp = true, extraValue = {}, isCustomProp = true;
+  switch (prop){
+    case 'border':
+      if (value['width'] && value['width'].split(' ').length > 1) {
+        seperateProp = value['width'].split(' ').reduce(function(a, b){ return (a === b) ? a : false; });
+        if (seperateProp) {
+          value['width'] = seperateProp;  //Pass by reference, so changes the value directly.
+          extraValue = {
+            radius : value['radius'],
+            image: value['image']
+          }
+          isCustomProp = !seperateProp;
+        }
+      }
+      break;
+
+      default:
+        break;
+  }
+  return {isCustomProp, extraValue};
+}
+
+/**
  * Convert object to array.
  *
  * @param {Object} object of values
@@ -54,22 +81,9 @@ function objectToArray(value, prop, rule, isFallback, isInArray) {
 
   // Check if exists any non-standart property
   if (customPropObj[prop]) {
-    var seperate_prop = true;
-    var extraValue;
-    if(prop == "border"){
-      if(value['width'] && value['width'].split(' ').length > 1){
-        seperate_prop = value['width'].split(' ').reduce(function(a, b){ return (a === b) ? a : NaN; });
-        if(seperate_prop){
-          value['width'] = seperate_prop;
-          extraValue = {
-            radius : value['radius']
-          }
-          seperate_prop = !seperate_prop;
-        }
-      }
-    }
-    
-    if(seperate_prop){
+    var {isCustomProp, extraValue} =  checkForSeperateProp(value, prop);
+
+    if(isCustomProp){
       value = customPropsToStyle(value, rule, customPropObj[prop], isFallback)
     }
     if(extraValue){
