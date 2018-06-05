@@ -54,7 +54,27 @@ function objectToArray(value, prop, rule, isFallback, isInArray) {
 
   // Check if exists any non-standart property
   if (customPropObj[prop]) {
-    value = customPropsToStyle(value, rule, customPropObj[prop], isFallback)
+    var seperate_prop = true;
+    var extraValue;
+    if(prop == "border"){
+      if(value['width'] && value['width'].split(' ').length > 1){
+        seperate_prop = value['width'].split(' ').reduce(function(a, b){ return (a === b) ? a : NaN; });
+        if(seperate_prop){
+          value['width'] = seperate_prop;
+          extraValue = {
+            radius : value['radius']
+          }
+          seperate_prop = !seperate_prop;
+        }
+      }
+    }
+    
+    if(seperate_prop){
+      value = customPropsToStyle(value, rule, customPropObj[prop], isFallback)
+    }
+    if(extraValue){
+      customPropsToStyle(extraValue, rule, customPropObj[prop], isFallback)
+    }
   }
 
   // Pass throught all standart props
@@ -71,7 +91,7 @@ function objectToArray(value, prop, rule, isFallback, isInArray) {
 
       // Add default value from props config.
       if (propObj[prop][baseProp] != null) {
-        result.push(propObj[prop][baseProp])
+        // result.push(propObj[prop][baseProp])
       }
     }
   }
@@ -94,7 +114,7 @@ function customPropsToStyle(value, rule, customProps, isFallback) {
     const propName = customProps[prop]
 
     // If current property doesn't exist already in rule - add new one
-    if (value && typeof value[prop] !== 'undefined' && (isFallback || !rule.prop(propName))) {
+    if (typeof value[prop] !== 'undefined' && (isFallback || !rule.prop(propName))) {
       const appendedValue = styleDetector({
         [propName]: value[prop]
       }, rule)[propName]
@@ -163,10 +183,15 @@ function styleDetector(style, rule, isFallback) {
 export default function jssExpand() {
   function onChangeValue(newValue, prop, rule) {
     if (!Array.isArray(newValue) && typeof newValue === 'object') {
-      return objectToArray(newValue, prop, rule)
+      var result =  objectToArray(newValue, prop, rule);
+      if(result && Array.isArray(result) && !result.length){
+        return null;
+      }else{
+        return result;
+      }
     } else if (Array.isArray(newValue)) {
       if (!newValue.length) {
-        return [];
+        return null;
       }
     }
     return newValue;
